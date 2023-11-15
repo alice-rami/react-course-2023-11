@@ -5,8 +5,8 @@ import React from 'react';
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
 root.render(
-  <>
-    <article>
+  <ul>
+    <li>
       <h2>{restaurants[0].name}</h2>
       <h3>Меню</h3>
       <ul>
@@ -19,9 +19,9 @@ root.render(
         <li>{restaurants[0].reviews[0].text}</li>
         <li>{restaurants[0].reviews[1].text}</li>
       </ul>
-    </article>
+    </li>
 
-    <article>
+    <li>
       <h2>{restaurants[1].name}</h2>
       <h3>Меню</h3>
       <ul>
@@ -34,9 +34,9 @@ root.render(
         <li>{restaurants[1].reviews[1].text}</li>
         <li>{restaurants[1].reviews[2].text}</li>
       </ul>
-    </article>
+    </li>
 
-    <article>
+    <li>
       <h2>{restaurants[2].name}</h2>
       <h3>Меню</h3>
       <ul>
@@ -48,9 +48,9 @@ root.render(
       <ul>
         <li>{restaurants[2].reviews[0].text}</li>
       </ul>
-    </article>
+    </li>
 
-    <article>
+    <li>
       <h2>{restaurants[3].name}</h2>
       <h3>Меню</h3>
       <ul>
@@ -62,14 +62,14 @@ root.render(
         <li>{restaurants[3].reviews[0].text}</li>
         <li>{restaurants[3].reviews[1].text}</li>
       </ul>
-    </article>
-  </>
+    </li>
+  </ul>
 );
 
 // root.render(
-//   React.createElement('div', {
+//   React.createElement('ul', {
 //     children: [
-//       React.createElement('article', {
+//       React.createElement('li', {
 //         key: 0,
 //         children: [
 //           React.createElement('h2', {
@@ -112,7 +112,7 @@ root.render(
 //         ],
 //       }),
 
-//       React.createElement('article', {
+//       React.createElement('li', {
 //         key: 1,
 //         children: [
 //           React.createElement('h2', {
@@ -155,7 +155,7 @@ root.render(
 //         ],
 //       }),
 
-//       React.createElement('article', {
+//       React.createElement('li', {
 //         key: 2,
 //         children: [
 //           React.createElement('h2', {
@@ -194,7 +194,7 @@ root.render(
 //         ],
 //       }),
 
-//       React.createElement('article', {
+//       React.createElement('li', {
 //         key: 3,
 //         children: [
 //           React.createElement('h2', {
