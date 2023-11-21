@@ -1,33 +1,20 @@
-type RestaurantId = string;
-export type TRestaurantName = string;
-
-type DishId = string;
-type DishName = string;
-type DishPrice = number;
-type DishIngredient = string;
-
-export type TDish = {
-  id: DishId;
-  name: DishName;
-  price: DishPrice;
-  ingredients: DishIngredient[];
+export type Dish = {
+  id: string;
+  name: string;
+  price: number;
+  ingredients: string[];
 };
 
-type ReviewId = string;
-type ReviewAuthor = string;
-type ReviewText = string;
-type ReviewRating = number;
-
-export type TReview = {
-  id: ReviewId;
-  user: ReviewAuthor;
-  text: ReviewText;
-  rating: ReviewRating;
+export type Review = {
+  id: string;
+  user: string;
+  text: string;
+  rating: number;
 };
 
-export type TRestaurant = {
-  id: RestaurantId;
-  name: TRestaurantName;
-  menu: TDish[];
-  reviews: TReview[];
+export type Restaurant = {
+  id: string;
+  name: string;
+  menu: Dish[];
+  reviews: Review[];
 };

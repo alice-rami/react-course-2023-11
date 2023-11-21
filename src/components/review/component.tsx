@@ -1,13 +1,13 @@
-import { TReview } from '../../types/types';
+import { Review as ReviewEntity } from '../../types/types';
 
 interface ReviewProps {
-  review: TReview;
+  review: ReviewEntity;
 }
 
 export const Review = ({ review }: ReviewProps) => {
   return (
-    <li>
+    <div>
       <p>{review.text}</p>
-    </li>
+    </div>
   );
 };

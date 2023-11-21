@@ -1,9 +1,9 @@
 import { RestaurantPicker } from '../../components/restaurant-picker/component';
 import { Restaurants } from '../../components/restaurants/component';
-import { TRestaurant } from '../../types/types';
+import { Restaurant } from '../../types/types';
 
 interface RestaurantsPageProps {
-  restaurants: TRestaurant[];
+  restaurants: Restaurant[];
 }
 
 export const RestaurantsPage = ({ restaurants }: RestaurantsPageProps) => {

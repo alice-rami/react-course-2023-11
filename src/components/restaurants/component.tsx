@@ -1,15 +1,17 @@
-import { TRestaurant } from '../../types/types';
+import { Restaurant as RestaurantEntity } from '../../types/types';
 import { Restaurant } from '../restaurant/component';
 
 interface RestaurantsProps {
-  restaurants: TRestaurant[];
+  restaurants: RestaurantEntity[];
 }
 
 export const Restaurants = ({ restaurants }: RestaurantsProps) => {
   return (
     <ul>
       {restaurants.map((restaurant) => (
-        <Restaurant restaurant={restaurant} />
+        <li>
+          <Restaurant restaurant={restaurant} />
+        </li>
       ))}
     </ul>
   );

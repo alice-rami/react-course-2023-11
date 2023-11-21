@@ -1,15 +1,14 @@
-import { TRestaurantName } from '../../types/types';
-import { RestaurantPickerItem } from '../restaurant-picker-item/component';
+import { PickerItem } from '../picker-item/component';
 
 interface RestaurantPickerProps {
-  names: TRestaurantName[];
+  names: string[];
 }
 
 export const RestaurantPicker = ({ names }: RestaurantPickerProps) => {
   return (
     <nav>
       {names.map((name) => (
-        <RestaurantPickerItem name={name} />
+        <PickerItem>{name}</PickerItem>
       ))}
     </nav>
   );

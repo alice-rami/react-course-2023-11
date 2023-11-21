@@ -1,19 +1,21 @@
-import { TDish } from '../../types/types';
-import { MenuDish } from '../menu-dish/component';
+import { Dish as DishEntity } from '../../types/types';
+import { Dish } from '../dish/component';
 
 interface MenuProps {
-  menu: TDish[];
+  menu: DishEntity[];
 }
 
 export const Menu = ({ menu }: MenuProps) => {
   return (
-    <>
+    <div>
       <h3>Меню</h3>
       <ul>
         {menu.map((dish) => (
-          <MenuDish dish={dish} />
+          <li>
+            <Dish dish={dish} />
+          </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };

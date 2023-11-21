@@ -1,8 +1,8 @@
 import { RestaurantsPage } from './pages/restaurants-page/component';
-import { TRestaurant } from './types/types';
+import { Restaurant } from './types/types';
 
 interface AppProps {
-  restaurants: TRestaurant[];
+  restaurants: Restaurant[];
 }
 
 export const App = ({ restaurants }: AppProps) => {
