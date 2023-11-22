@@ -11,7 +11,7 @@ export const Menu = ({ menu }: MenuProps) => {
       <h3>Меню</h3>
       <ul>
         {menu.map((dish) => (
-          <li>
+          <li key={dish.id}>
             <Dish dish={dish} />
           </li>
         ))}
