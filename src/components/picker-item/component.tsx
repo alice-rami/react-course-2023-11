@@ -1,9 +1,13 @@
-import { ReactNode } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 interface PickerItemProps {
-  children?: ReactNode | undefined;
+  pickItem: Dispatch<SetStateAction<string>>;
+  name: string;
 }
 
-export const PickerItem = ({ children }: PickerItemProps) => {
-  return <button>{children}</button>;
+export const PickerItem = ({ pickItem, name }: PickerItemProps) => {
+  if (!name) {
+    return null;
+  }
+  return <button onClick={() => pickItem(name)}>{name}</button>;
 };
