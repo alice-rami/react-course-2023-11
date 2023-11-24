@@ -3,23 +3,25 @@ import { Dispatch, SetStateAction } from 'react';
 interface CounterProps {
   count: number;
   setCount: Dispatch<SetStateAction<number>>;
+  step: number;
+  min: number;
+  max: number;
 }
 
-const MIN_VALUE = 0;
-const MAX_VALUE = 5;
-
-export const Counter = ({ count, setCount }: CounterProps) => {
+export const Counter = ({
+  count,
+  setCount,
+  step,
+  min = 0,
+  max = 5,
+}: CounterProps) => {
   return (
     <div>
-      <button
-        onClick={() => setCount(count > MIN_VALUE ? count - 1 : MIN_VALUE)}
-      >
+      <button onClick={() => setCount(count - step)} disabled={count <= min}>
         -
       </button>
       <span>{count}</span>
-      <button
-        onClick={() => setCount(count < MAX_VALUE ? count + 1 : MAX_VALUE)}
-      >
+      <button onClick={() => setCount(count + step)} disabled={count >= max}>
         +
       </button>
     </div>
