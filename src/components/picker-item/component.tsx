@@ -1,13 +1,11 @@
-import { Dispatch, SetStateAction } from 'react';
-
 interface PickerItemProps {
-  pickItem: Dispatch<SetStateAction<string>>;
-  name: string;
+  pickItem: () => void;
+  value: string;
 }
 
-export const PickerItem = ({ pickItem, name }: PickerItemProps) => {
-  if (!name) {
+export const PickerItem = ({ pickItem, value }: PickerItemProps) => {
+  if (!value) {
     return null;
   }
-  return <button onClick={() => pickItem(name)}>{name}</button>;
+  return <button onClick={() => pickItem()}>{value}</button>;
 };

@@ -8,18 +8,18 @@ interface RestaurantsPageProps {
 }
 
 export const RestaurantsPage = ({ restaurants }: RestaurantsPageProps) => {
-  const [currentRestaurant, setCurrentRestaurant] = useState<string>('');
-  const restaurantNames = restaurants.map(({ name }) => name);
-  const activeRestaurant = restaurants.find(
-    ({ name }) => name === currentRestaurant
+  const [currentRestaurantId, setCurrentRestaurantId] = useState<string>('');
+  const restaurantNamesIds = restaurants.map(({ name, id }) => ({ name, id }));
+  const currentRestaurant = restaurants.find(
+    ({ id }) => id === currentRestaurantId
   );
   return (
     <div>
       <RestaurantPicker
-        names={restaurantNames}
-        pickRestaurant={setCurrentRestaurant}
+        restaurants={restaurantNamesIds}
+        pickRestaurant={setCurrentRestaurantId}
       />
-      {activeRestaurant && <Restaurant restaurant={activeRestaurant} />}
+      {currentRestaurant && <Restaurant restaurant={currentRestaurant} />}
     </div>
   );
 };
