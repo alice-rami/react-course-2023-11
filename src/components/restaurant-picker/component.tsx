@@ -1,14 +1,19 @@
 import { PickerItem } from '../picker-item/component';
+import { Dispatch, SetStateAction } from 'react';
 
 interface RestaurantPickerProps {
-  names: string[];
+  restaurants: { name: string; id: string }[];
+  pickRestaurant: Dispatch<SetStateAction<string>>;
 }
 
-export const RestaurantPicker = ({ names }: RestaurantPickerProps) => {
+export const RestaurantPicker = ({
+  restaurants,
+  pickRestaurant,
+}: RestaurantPickerProps) => {
   return (
     <nav>
-      {names.map((name) => (
-        <PickerItem>{name}</PickerItem>
+      {restaurants.map(({ name, id }) => (
+        <PickerItem pickItem={() => pickRestaurant(id)} value={name} />
       ))}
     </nav>
   );

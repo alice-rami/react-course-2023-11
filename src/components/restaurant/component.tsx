@@ -7,11 +7,16 @@ interface RestaurantProps {
 }
 
 export const Restaurant = ({ restaurant }: RestaurantProps) => {
+  if (!restaurant) {
+    return null;
+  }
+
+  const { name, menu, reviews } = restaurant;
   return (
     <div>
-      <h2>{restaurant.name}</h2>
-      <Menu menu={restaurant.menu} />
-      <Reviews reviews={restaurant.reviews} />
+      <h2>{name}</h2>
+      <Menu menu={menu} />
+      <Reviews reviews={reviews} />
     </div>
   );
 };

@@ -1,9 +1,11 @@
-import { ReactNode } from 'react';
-
 interface PickerItemProps {
-  children?: ReactNode | undefined;
+  pickItem: () => void;
+  value: string;
 }
 
-export const PickerItem = ({ children }: PickerItemProps) => {
-  return <button>{children}</button>;
+export const PickerItem = ({ pickItem, value }: PickerItemProps) => {
+  if (!value) {
+    return null;
+  }
+  return <button onClick={() => pickItem()}>{value}</button>;
 };
