@@ -17,7 +17,13 @@ export const Dish = ({ dish }: DishProps) => {
     <div>
       <h4>{name}</h4>
       <p>{ingredients.join(', ')}</p>
-      <Counter count={count} setCount={setCount} step={1} min={0} max={5} />
+      <Counter
+        value={count}
+        increment={() => setCount(count + 1)}
+        decrement={() => setCount(count - 1)}
+        min={0}
+        max={5}
+      />
     </div>
   );
 };

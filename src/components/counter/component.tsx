@@ -1,27 +1,25 @@
-import { Dispatch, SetStateAction } from 'react';
-
 interface CounterProps {
-  count: number;
-  setCount: Dispatch<SetStateAction<number>>;
-  step: number;
-  min: number;
-  max: number;
+  value: number;
+  increment: () => void;
+  decrement: () => void;
+  min?: number;
+  max?: number;
 }
 
 export const Counter = ({
-  count,
-  setCount,
-  step,
+  value,
+  increment,
+  decrement,
   min = 0,
   max = 5,
 }: CounterProps) => {
   return (
     <div>
-      <button onClick={() => setCount(count - step)} disabled={count <= min}>
+      <button onClick={decrement} disabled={value <= min}>
         -
       </button>
-      <span>{count}</span>
-      <button onClick={() => setCount(count + step)} disabled={count >= max}>
+      <span>{value}</span>
+      <button onClick={increment} disabled={value >= max}>
         +
       </button>
     </div>
