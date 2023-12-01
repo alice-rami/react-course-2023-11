@@ -1,0 +1,6 @@
+.root {
+  height: var(--header-height);
+  background-color: var(--dark-blue);
+  color: white;
+  z-index: 1;
+}

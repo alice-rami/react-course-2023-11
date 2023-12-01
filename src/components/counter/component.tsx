@@ -1,3 +1,7 @@
+import classNames from 'classnames';
+import { Button } from '../button/component';
+import styles from './styles.module.css';
+
 interface CounterProps {
   value: number;
   increment: () => void;
@@ -14,14 +18,26 @@ export const Counter = ({
   max = 5,
 }: CounterProps) => {
   return (
-    <div>
-      <button onClick={decrement} disabled={value <= min}>
-        -
-      </button>
-      <span>{value}</span>
-      <button onClick={increment} disabled={value >= max}>
+    <div className={classNames(styles.root)}>
+      <Button
+        onClick={decrement}
+        disabled={value <= min}
+        size='small'
+        type='secondary'
+        className={styles.buttonText}
+      >
+        −
+      </Button>
+      <span className={classNames(styles.value)}>{value}</span>
+      <Button
+        onClick={increment}
+        disabled={value >= max}
+        size='small'
+        type='secondary'
+        className={styles.buttonText}
+      >
         +
-      </button>
+      </Button>
     </div>
   );
 };

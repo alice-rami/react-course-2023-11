@@ -1,3 +1,4 @@
+import { Layout } from '../../components/layout/component';
 import { RestaurantPicker } from '../../components/restaurant-picker/component';
 import { Restaurant } from '../../components/restaurant/component';
 import { Restaurant as RestaurantEntity } from '../../types/types';
@@ -15,11 +16,13 @@ export const RestaurantsPage = ({ restaurants }: RestaurantsPageProps) => {
   );
   return (
     <div>
-      <RestaurantPicker
-        restaurants={restaurantNamesIds}
-        pickRestaurant={setCurrentRestaurantId}
-      />
-      {currentRestaurant && <Restaurant restaurant={currentRestaurant} />}
+      <Layout>
+        <RestaurantPicker
+          restaurants={restaurantNamesIds}
+          pickRestaurant={setCurrentRestaurantId}
+        />
+        {currentRestaurant && <Restaurant restaurant={currentRestaurant} />}
+      </Layout>
     </div>
   );
 };

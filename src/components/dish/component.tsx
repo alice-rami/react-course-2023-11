@@ -1,6 +1,8 @@
 import { Dish as DishEntity } from '../../types/types';
 import { Counter } from '../counter/component';
 import { useState } from 'react';
+import styles from './styles.module.css';
+import classNames from 'classnames';
 
 interface DishProps {
   dish: DishEntity;
@@ -14,9 +16,13 @@ export const Dish = ({ dish }: DishProps) => {
 
   const { name, ingredients } = dish;
   return (
-    <div>
-      <h4>{name}</h4>
-      <p>{ingredients.join(', ')}</p>
+    <div className={classNames(styles.root)}>
+      <div className={classNames(styles.detailsContainer)}>
+        <h4>{name}</h4>
+        <p className={classNames(styles.ingredients)}>
+          {ingredients.join(', ')}
+        </p>
+      </div>
       <Counter
         value={count}
         increment={() => setCount(count + 1)}

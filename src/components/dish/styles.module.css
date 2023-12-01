@@ -1,0 +1,17 @@
+.root {
+  display: flex;
+  justify-content: center;
+  column-gap: 20px;
+}
+
+.detailsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.ingredients {
+  font-size: 0.8rem;
+  font-style: italic;
+}
