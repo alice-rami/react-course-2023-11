@@ -1,0 +1,10 @@
+.root {
+  display: flex;
+  column-gap: 5px;
+  padding-bottom: 5px;
+}
+
+.star {
+  width: 20px;
+  height: 20px;
+}
