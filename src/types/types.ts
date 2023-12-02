@@ -18,3 +18,5 @@ export type Restaurant = {
   menu: Dish[];
   reviews: Review[];
 };
+
+export type Theme = 'light' | 'dark';
