@@ -3,4 +3,12 @@
   background-color: var(--dark-blue);
   color: white;
   z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.button {
+  z-index: 2;
+  margin-right: 10px;
 }

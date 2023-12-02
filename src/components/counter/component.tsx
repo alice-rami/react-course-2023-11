@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { Button } from '../button/component';
 import styles from './styles.module.css';
+import { useTheme } from '../../theme-context/hook';
 
 interface CounterProps {
   value: number;
@@ -17,6 +18,7 @@ export const Counter = ({
   min = 0,
   max = 5,
 }: CounterProps) => {
+  const { theme } = useTheme();
   return (
     <div className={classNames(styles.root)}>
       <Button
@@ -25,6 +27,7 @@ export const Counter = ({
         size='small'
         type='secondary'
         className={styles.buttonText}
+        theme={theme}
       >
         −
       </Button>
@@ -35,6 +38,7 @@ export const Counter = ({
         size='small'
         type='secondary'
         className={styles.buttonText}
+        theme={theme}
       >
         +
       </Button>
