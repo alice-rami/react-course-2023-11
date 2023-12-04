@@ -13,7 +13,7 @@
 :root {
   --header-height: 80px;
   --footer-height: 80px;
-  --orange-light: rgba(255, 140, 0, 0.5);
+  --orange-light: rgb(237, 185, 123);
   --orange: rgb(255, 140, 0);
   --border-grey: darkgrey;
   --disabled-grey: #ccc;

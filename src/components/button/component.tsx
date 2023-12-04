@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { ReactNode } from 'react';
 import styles from './styles.module.css';
+import { useTheme } from '../../theme-context/hook';
 
 interface ButtonProps {
   onClick: () => void;
@@ -19,10 +20,17 @@ export const Button = ({
   disabled = false,
   children,
 }: ButtonProps) => {
+  const { theme } = useTheme();
   return (
     <button
       onClick={onClick}
-      className={classNames(styles.root, styles[type], styles[size], className)}
+      className={classNames(
+        styles.root,
+        styles[type],
+        styles[size],
+        { [styles.dark]: theme === 'dark' },
+        className
+      )}
       disabled={disabled}
     >
       {children}
