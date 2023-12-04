@@ -1,5 +1,7 @@
 import { PickerItem } from '../picker-item/component';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './styles.module.css';
+import classNames from 'classnames';
 
 interface RestaurantPickerProps {
   restaurants: { name: string; id: string }[];
@@ -11,7 +13,7 @@ export const RestaurantPicker = ({
   pickRestaurant,
 }: RestaurantPickerProps) => {
   return (
-    <nav>
+    <nav className={classNames(styles.root)}>
       {restaurants.map(({ name, id }) => (
         <PickerItem pickItem={() => pickRestaurant(id)} value={name} />
       ))}

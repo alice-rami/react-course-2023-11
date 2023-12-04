@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  width: 100%;
+}
+
+.value {
+  min-width: 2rem;
+  text-align: center;
+}
+
+.buttonText {
+  font-size: 1rem;
+  font-weight: bold;
+}

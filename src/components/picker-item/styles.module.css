@@ -1,0 +1,24 @@
+.item {
+  font-size: 1.2rem;
+  white-space: nowrap;
+}
+
+.item:not(:last-child) {
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 750px) {
+  .item {
+    font-size: 1rem;
+  }
+
+  .item:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .item:not(:last-child) {
+    margin-right: 5px;
+  }
+}

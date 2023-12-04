@@ -1,0 +1,12 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  width: 100%;
+}
+
+.title {
+  padding: 50px 20px 0;
+  text-align: center;
+  font-size: 2rem;
+}
