@@ -1,26 +1,31 @@
 import classNames from 'classnames';
-import { Restaurant as RestaurantEntity } from '../../types/types';
 import { Menu } from '../menu/component';
 import { ReviewForm } from '../review-form/component';
 import { Reviews } from '../reviews/component';
 import styles from './styles.module.css';
+import { useAppSelector } from '../../hooks/hooks';
+import { selectRestaurantById } from '../../redux/features/entities/restaurant/selectors';
 
 interface RestaurantProps {
-  restaurant: RestaurantEntity;
+  restaurantId: string;
 }
 
-export const Restaurant = ({ restaurant }: RestaurantProps) => {
+export const Restaurant = ({ restaurantId }: RestaurantProps) => {
+  const restaurant = useAppSelector((store) =>
+    selectRestaurantById(store, restaurantId)
+  );
   if (!restaurant) {
     return null;
   }
 
-  const { name, menu, reviews, id } = restaurant;
+  const { name, menu, reviews } = restaurant;
+
   return (
     <div className={classNames(styles.root)}>
       <h2 className={classNames(styles.title)}>{name}</h2>
-      <Menu menu={menu} />
-      <Reviews reviews={reviews} />
-      <ReviewForm key={id} />
+      <Menu dishIds={menu} />
+      <Reviews reviewIds={reviews} />
+      <ReviewForm key={restaurantId} />
     </div>
   );
 };
