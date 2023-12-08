@@ -1,21 +1,20 @@
 import classNames from 'classnames';
-import { Dish as DishEntity } from '../../types/types';
 import { Dish } from '../dish/component';
 import styles from './styles.module.css';
 
 interface MenuProps {
-  menu: DishEntity[];
+  dishIds: string[];
   className?: string;
 }
 
-export const Menu = ({ menu, className }: MenuProps) => {
+export const Menu = ({ dishIds, className }: MenuProps) => {
   return (
     <div className={classNames(styles.root, className)}>
       <h3 className={classNames(styles.title)}>Меню</h3>
       <ul className={classNames(styles.list)}>
-        {menu.map((dish) => (
-          <li key={dish.id} className={classNames(styles.itemContainer)}>
-            <Dish dish={dish} />
+        {dishIds.map((dishId) => (
+          <li key={dishId} className={classNames(styles.itemContainer)}>
+            <Dish dishId={dishId} />
           </li>
         ))}
       </ul>
