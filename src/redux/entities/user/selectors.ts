@@ -1,4 +1,4 @@
-import { RootState } from '../../../';
+import { RootState } from '../..';
 
 export const selectUserModule = (state: RootState) => state.users;
 export const selectUserIds = (state: RootState) => selectUserModule(state).ids;
