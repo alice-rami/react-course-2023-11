@@ -16,3 +16,8 @@
   row-gap: 10px;
   padding: 10px;
 }
+
+.review {
+  display: flex;
+  flex-direction: column;
+}

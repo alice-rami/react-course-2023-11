@@ -2,17 +2,15 @@ import { Counter } from '../counter/component';
 import { useState } from 'react';
 import styles from './styles.module.css';
 import classNames from 'classnames';
-import { useAppSelector } from '../../hooks/hooks';
-import { selectDishById } from '../../redux/features/entities/dish/selectors';
+import { Dish as DishEntity } from '../../types/types';
 
 interface DishProps {
-  dishId: string;
+  dish: DishEntity;
 }
 
-export const Dish = ({ dishId }: DishProps) => {
+export const Dish = ({ dish }: DishProps) => {
   const [count, setCount] = useState(0);
 
-  const dish = useAppSelector((state) => selectDishById(state, dishId));
   if (!dish) {
     return null;
   }

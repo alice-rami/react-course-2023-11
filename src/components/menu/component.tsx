@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { Dish } from '../dish/component';
 import styles from './styles.module.css';
+import { DishContainer } from '../dish/container';
 
 interface MenuProps {
   dishIds: string[];
@@ -14,7 +14,7 @@ export const Menu = ({ dishIds, className }: MenuProps) => {
       <ul className={classNames(styles.list)}>
         {dishIds.map((dishId) => (
           <li key={dishId} className={classNames(styles.itemContainer)}>
-            <Dish dishId={dishId} />
+            <DishContainer dishId={dishId} />
           </li>
         ))}
       </ul>

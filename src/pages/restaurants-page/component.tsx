@@ -1,17 +1,26 @@
 import { Layout } from '../../components/layout/component';
-import { RestaurantPicker } from '../../components/restaurant-picker/component';
-import { Restaurant } from '../../components/restaurant/component';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAppDispatch } from '../../hooks/hooks';
+import { RestaurantPickerContainer } from '../../components/restaurant-picker/container';
+import { RestaurantContainer } from '../../components/restaurant/container';
+import { getRestaurants } from '../../redux/entities/restaurant/thunks/get-restaurants';
+import { getUsers } from '../../redux/entities/user/get-users/get-users';
 
 export const RestaurantsPage = () => {
   const [currentRestaurantId, setCurrentRestaurantId] = useState<string>('');
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getRestaurants());
+    dispatch(getUsers());
+  }, [dispatch]);
 
   return (
     <div>
       <Layout>
-        <RestaurantPicker pickRestaurant={setCurrentRestaurantId} />
+        <RestaurantPickerContainer pickRestaurant={setCurrentRestaurantId} />
         {currentRestaurantId && (
-          <Restaurant restaurantId={currentRestaurantId} />
+          <RestaurantContainer restaurantId={currentRestaurantId} />
         )}
       </Layout>
     </div>

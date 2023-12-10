@@ -2,24 +2,20 @@ import classNames from 'classnames';
 import styles from './styles.module.css';
 import review_icon from '../../images/review_icon.svg';
 import { Rating } from '../rating/component';
-import { useAppSelector } from '../../hooks/hooks';
-import { selectReviewById } from '../../redux/features/entities/review/selectors';
-import { selectUserById } from '../../redux/features/entities/user/selectors';
+import { Review as ReviewEntity } from '../../types/types';
+import { UserContainer } from '../user/container';
 
 interface ReviewProps {
-  reviewId: string;
+  review: ReviewEntity;
   className?: string;
 }
 
-export const Review = ({ reviewId, className }: ReviewProps) => {
-  const review = useAppSelector((state) => selectReviewById(state, reviewId));
-  const user = useAppSelector((state) => selectUserById(state, review?.userId));
-
+export const Review = ({ review, className }: ReviewProps) => {
   if (!review) {
     return null;
   }
 
-  const { text, rating } = review;
+  const { text, rating, userId } = review;
 
   return (
     <div className={classNames(styles.root)}>
@@ -27,7 +23,7 @@ export const Review = ({ reviewId, className }: ReviewProps) => {
       <blockquote className={classNames(className)}>
         <Rating rating={rating} />
         <p className={classNames(styles.quote)}>"{text}"</p>
-        <p className={classNames(styles.user)}>— {user && user.name}</p>
+        <UserContainer userId={userId} />
       </blockquote>
     </div>
   );
