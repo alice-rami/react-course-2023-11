@@ -1,28 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { getReviewsByRestaurantId } from './get-reviews/get-reviews';
 import { Review } from '../../../types/types';
-import {
-  REQUEST_STATUSES,
-  Statuses,
-} from '../../../constants/request-statuses';
+import { REQUEST_STATUSES } from '../../../constants/request-statuses';
 
-type ReviewEntity = Record<string, Review>;
-
-interface ReviewInitialState {
-  entities: ReviewEntity;
-  ids: string[];
-  status: Statuses;
-}
-
-const initialState: ReviewInitialState = {
-  entities: {},
-  ids: [],
-  status: REQUEST_STATUSES.idle,
-};
+const entityAdapter = createEntityAdapter<Review>();
 
 export const reviewSlice = createSlice({
   name: 'review',
-  initialState,
+  initialState: entityAdapter.getInitialState({
+    status: REQUEST_STATUSES.idle,
+  }),
   reducers: {},
   extraReducers: (builder) =>
     builder
@@ -33,15 +20,7 @@ export const reviewSlice = createSlice({
         state.status = REQUEST_STATUSES.rejected;
       })
       .addCase(getReviewsByRestaurantId.fulfilled, (state, { payload }) => {
-        state.entities = payload.reduce((acc: ReviewEntity, review: Review) => {
-          if (!acc[review.id]) {
-            acc[review.id] = review;
-          }
-          return acc;
-        }, state.entities);
-        state.ids = Array.from(
-          new Set([...state.ids, ...payload.map(({ id }: Review) => id)])
-        );
+        entityAdapter.upsertMany(state, payload);
         state.status = REQUEST_STATUSES.fulfilled;
       }),
 });
