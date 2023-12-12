@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { User } from '../../../../types/types';
 import { BASE_URL } from '../../../constants';
 import { RootState } from '../../..';
-import { REQUEST_STATUSES } from '../../../../constants/request-statuses';
+import { selectUserIds } from '../selectors';
 
 export const getUsers = createAsyncThunk<User[]>(
   'user/getUsers',
@@ -18,10 +18,8 @@ export const getUsers = createAsyncThunk<User[]>(
   {
     condition: (_, { getState }) => {
       const state = getState() as RootState;
-      const notEmpty = state.users.status === REQUEST_STATUSES.fulfilled;
-      if (notEmpty) {
-        return false;
-      }
+      const userIds: string[] = selectUserIds(state);
+      return userIds?.length === 0;
     },
   }
 );

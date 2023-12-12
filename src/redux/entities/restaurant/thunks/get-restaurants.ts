@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Restaurant } from '../../../../types/types';
 import { BASE_URL } from '../../../constants';
-import { REQUEST_STATUSES } from '../../../../constants/request-statuses';
 import { RootState } from '../../..';
+import { selectRestaurantIds } from '../selectors';
 
 export const getRestaurants = createAsyncThunk<Restaurant[]>(
   'restaurants/getRestaurants',
@@ -18,10 +18,8 @@ export const getRestaurants = createAsyncThunk<Restaurant[]>(
   {
     condition: (_, { getState }) => {
       const state = getState() as RootState;
-      const notEmpty = state.restaurants.status === REQUEST_STATUSES.fulfilled;
-      if (notEmpty) {
-        return false;
-      }
+      const restaurantsIds: string[] = selectRestaurantIds(state);
+      return restaurantsIds?.length === 0;
     },
   }
 );
