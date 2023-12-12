@@ -4,21 +4,18 @@ import { getRestaurants } from '../../redux/entities/restaurant/thunks/get-resta
 import { getUsers } from '../../redux/entities/user/get-users/get-users';
 import { RestaurantsPage } from './component';
 import { selectRestaurantLoadingStatus } from '../../redux/entities/restaurant/selectors';
+import { REQUEST_STATUSES } from '../../constants/request-statuses';
 
 export const RestaurantsPageContainer = () => {
   const dispatch = useAppDispatch();
-  const loadingStatus = useAppSelector((state) =>
-    selectRestaurantLoadingStatus(state)
-  );
+  const isLoading =
+    useAppSelector((state) => selectRestaurantLoadingStatus(state)) ===
+    REQUEST_STATUSES.pending;
 
   useEffect(() => {
     dispatch(getRestaurants());
     dispatch(getUsers());
   }, [dispatch]);
 
-  if (loadingStatus === 'pending') {
-    return <p>Loading...</p>;
-  }
-
-  return <RestaurantsPage />;
+  return <RestaurantsPage isLoading={isLoading} />;
 };
