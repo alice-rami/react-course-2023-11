@@ -37,7 +37,7 @@ export const userSlice = createSlice({
           acc[user.id] = user;
           return acc;
         }, {});
-        state.ids = payload.map(({ id }: User) => id);
+        state.ids = Array.from(new Set(payload.map(({ id }: User) => id)));
         state.status = REQUEST_STATUSES.fulfilled;
       }),
 });

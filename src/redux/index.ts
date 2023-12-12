@@ -15,8 +15,6 @@ const store = configureStore({
   middleware: (getDefaultMiddlewares) => getDefaultMiddlewares(),
 });
 
-console.log(store.getState());
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

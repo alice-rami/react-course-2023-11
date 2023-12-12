@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { getReviewsByRestaurantId } from './get-reviews/get-reviews';
 import { Review } from '../../../types/types';
 import {
@@ -12,26 +12,18 @@ interface ReviewInitialState {
   entities: ReviewEntity;
   ids: string[];
   status: Statuses;
-  restaurantIds: string[];
 }
 
 const initialState: ReviewInitialState = {
   entities: {},
   ids: [],
   status: REQUEST_STATUSES.idle,
-  restaurantIds: [],
 };
 
 export const reviewSlice = createSlice({
   name: 'review',
   initialState,
-  reducers: {
-    addReviewsRestaurantId: (state, action: PayloadAction<string>) => {
-      if (!state.restaurantIds.includes(action.payload)) {
-        state.restaurantIds.push(action.payload);
-      }
-    },
-  },
+  reducers: {},
   extraReducers: (builder) =>
     builder
       .addCase(getReviewsByRestaurantId.pending, (state) => {
@@ -41,19 +33,15 @@ export const reviewSlice = createSlice({
         state.status = REQUEST_STATUSES.rejected;
       })
       .addCase(getReviewsByRestaurantId.fulfilled, (state, { payload }) => {
-        payload.reduce((acc: ReviewEntity, review: Review) => {
+        state.entities = payload.reduce((acc: ReviewEntity, review: Review) => {
           if (!acc[review.id]) {
             acc[review.id] = review;
           }
           return acc;
         }, state.entities);
-        payload.map(({ id }: Review) => {
-          if (!state.ids.includes(id)) {
-            state.ids.push(id);
-          }
-        });
+        state.ids = Array.from(
+          new Set([...state.ids, ...payload.map(({ id }: Review) => id)])
+        );
         state.status = REQUEST_STATUSES.fulfilled;
       }),
 });
-
-export const reviewSliceActions = reviewSlice.actions;

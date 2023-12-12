@@ -40,7 +40,9 @@ export const restaurantSlice = createSlice({
           },
           {}
         );
-        state.ids = payload.map(({ id }: Restaurant) => id);
+        state.ids = Array.from(
+          new Set(payload.map(({ id }: Restaurant) => id))
+        );
         state.status = REQUEST_STATUSES.fulfilled;
       }),
 });
