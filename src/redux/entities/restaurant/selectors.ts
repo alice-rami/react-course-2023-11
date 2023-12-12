@@ -10,3 +10,6 @@ export const selectRestaurantsByIds = (state: RootState) =>
 
 export const selectRestaurantById = (state: RootState, id: string) =>
   selectRestaurantModule(state).entities[id];
+
+export const selectRestaurantLoadingStatus = (state: RootState) =>
+  selectRestaurantModule(state).status;
