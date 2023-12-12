@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { dishSliceActions } from '..';
 import { BASE_URL } from '../../../constants';
 import { RootState } from '../../..';
+import { selectDishIds } from '../selectors';
+import { selectRestaurantById } from '../../restaurant/selectors';
 
 export const getDishesByRestaurantId = createAsyncThunk(
   'dish/getDishesByRestaurantId',
-  async (restaurantId: string, { rejectWithValue, dispatch }) => {
+  async (restaurantId: string, { rejectWithValue }) => {
     const response = await fetch(
       `${BASE_URL}/dishes?restaurantId=${restaurantId}`
     );
@@ -13,16 +14,17 @@ export const getDishesByRestaurantId = createAsyncThunk(
     if (!result?.length) {
       rejectWithValue('Empty!');
     }
-    dispatch(dishSliceActions.addMenuRestaurantId(restaurantId));
     return result;
   },
   {
     condition: (restaurantId, { getState }) => {
-      const { dishes } = getState() as RootState;
-      const hasRestaurantId = dishes.restaurantIds.includes(restaurantId);
-      if (hasRestaurantId) {
-        return false;
-      }
+      const state = getState() as RootState;
+      const dishIds: string[] = selectDishIds(state);
+      const restaurantDishIds: string[] = selectRestaurantById(
+        state,
+        restaurantId
+      )?.menu;
+      return !restaurantDishIds.every((id) => dishIds.includes(id));
     },
   }
 );
