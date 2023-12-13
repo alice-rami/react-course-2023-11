@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { ReviewForm } from '../review-form/component';
 import styles from './styles.module.css';
 import { Restaurant as RestaurantEntity } from '../../types/types';
 import { MenuContainer } from '../menu/container';
@@ -31,7 +30,6 @@ export const Restaurant = ({ restaurant }: RestaurantProps) => {
       </div>
       <MenuContainer restaurantId={id} />
       <ReviewsContainer restaurantId={id} />
-      <ReviewForm key={id} />
     </div>
   );
 };
