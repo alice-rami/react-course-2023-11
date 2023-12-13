@@ -1,7 +1,6 @@
 import { SetStateAction, Dispatch } from 'react';
-import { useAppSelector } from '../../hooks/hooks';
 import { RestaurantPicker } from './component';
-import { selectRestaurantIds } from '../../redux/entities/restaurant/selectors';
+import { useGetRestaurantsQuery } from '../../redux/services/api';
 
 interface RestaurantPickerContainerProps {
   pickRestaurant: Dispatch<SetStateAction<string>>;
@@ -10,11 +9,13 @@ interface RestaurantPickerContainerProps {
 export const RestaurantPickerContainer = ({
   pickRestaurant,
 }: RestaurantPickerContainerProps) => {
-  const restaurantIds = useAppSelector((state) => selectRestaurantIds(state));
+  const { data } = useGetRestaurantsQuery();
+
+  if (!data) {
+    return null;
+  }
+
   return (
-    <RestaurantPicker
-      pickRestaurant={pickRestaurant}
-      restaurantIds={restaurantIds}
-    />
+    <RestaurantPicker pickRestaurant={pickRestaurant} restaurants={data} />
   );
 };

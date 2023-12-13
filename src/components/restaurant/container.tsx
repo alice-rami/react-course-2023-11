@@ -1,6 +1,5 @@
 import { Restaurant } from './component';
-import { useAppSelector } from '../../hooks/hooks';
-import { selectRestaurantById } from '../../redux/entities/restaurant/selectors';
+import { useGetRestaurantByIdQuery } from '../../redux/services/api';
 
 interface RestaurantContainerProps {
   restaurantId: string;
@@ -9,8 +8,10 @@ interface RestaurantContainerProps {
 export const RestaurantContainer = ({
   restaurantId,
 }: RestaurantContainerProps) => {
-  const restaurant = useAppSelector((store) =>
-    selectRestaurantById(store, restaurantId)
-  );
-  return <Restaurant restaurant={restaurant} />;
+  const { data } = useGetRestaurantByIdQuery(restaurantId);
+
+  if (!data) {
+    return null;
+  }
+  return <Restaurant restaurant={data} />;
 };

@@ -2,24 +2,25 @@ import { Dispatch, SetStateAction } from 'react';
 import styles from './styles.module.css';
 import classNames from 'classnames';
 import { RestaurantPickerItemContainer } from '../restaurant-picker-item/container';
+import { Restaurant } from '../../types/types';
 
 interface RestaurantPickerProps {
   pickRestaurant: Dispatch<SetStateAction<string>>;
-  restaurantIds: string[];
+  restaurants: Restaurant[];
 }
 
 export const RestaurantPicker = ({
   pickRestaurant,
-  restaurantIds,
+  restaurants,
 }: RestaurantPickerProps) => {
   return (
     <nav className={classNames(styles.root)}>
-      {restaurantIds.map((id) => {
+      {restaurants.map((restaurant) => {
         return (
           <RestaurantPickerItemContainer
-            key={id}
-            restaurantId={id}
-            pickItem={() => pickRestaurant(id)}
+            key={restaurant.id}
+            restaurant={restaurant}
+            pickItem={() => pickRestaurant(restaurant.id)}
           />
         );
       })}

@@ -1,5 +1,4 @@
-import { useAppSelector } from '../../hooks/hooks';
-import { selectUserById } from '../../redux/entities/user/selectors';
+import { useGetUsersQuery } from '../../redux/services/api';
 import { User } from './component';
 
 interface UserProps {
@@ -7,10 +6,17 @@ interface UserProps {
 }
 
 export const UserContainer = ({ userId }: UserProps) => {
-  const user = useAppSelector((state) => selectUserById(state, userId));
+  const { data } = useGetUsersQuery();
+  if (!data) {
+    return null;
+  }
+  const user = data.find(({ id }) => id === userId);
+
   if (!user) {
     return null;
   }
+
   const { name } = user;
+
   return <User>— {name}</User>;
 };

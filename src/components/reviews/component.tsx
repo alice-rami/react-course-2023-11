@@ -1,23 +1,21 @@
 import classNames from 'classnames';
 import styles from './styles.module.css';
-import { ReviewContainer } from '../review/container';
+import { Review as ReviewEntity } from '../../types/types';
+import { Review } from '../review/component';
 
 interface ReviewsProps {
-  reviewIds: string[];
+  reviews: ReviewEntity[];
   className?: string;
 }
 
-export const Reviews = ({ reviewIds, className }: ReviewsProps) => {
+export const Reviews = ({ reviews, className }: ReviewsProps) => {
   return (
     <div className={classNames(styles.root, className)}>
       <h3 className={classNames(styles.title)}>Отзывы</h3>
       <ul className={classNames(styles.list)}>
-        {reviewIds.map((reviewId) => (
-          <li key={reviewId}>
-            <ReviewContainer
-              reviewId={reviewId}
-              className={classNames(styles.review)}
-            />
+        {reviews.map((review) => (
+          <li key={review.id}>
+            <Review review={review} className={classNames(styles.review)} />
           </li>
         ))}
       </ul>

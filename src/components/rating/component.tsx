@@ -32,8 +32,12 @@ export const Rating = ({ rating, className }: RatingProps) => {
   const ratingScheme = createRatingScheme(rating);
   return (
     <div className={classNames(styles.root, className)}>
-      {ratingScheme.map((item) => (
-        <img src={stars[item]} className={classNames(styles.star)} />
+      {ratingScheme.map((item, index) => (
+        <img
+          key={index}
+          src={stars[item]}
+          className={classNames(styles.star)}
+        />
       ))}
     </div>
   );
