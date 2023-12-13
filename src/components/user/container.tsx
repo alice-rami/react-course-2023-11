@@ -6,11 +6,11 @@ interface UserProps {
 }
 
 export const UserContainer = ({ userId }: UserProps) => {
-  const { data } = useGetUsersQuery();
-  if (!data) {
-    return null;
-  }
-  const user = data.find(({ id }) => id === userId);
+  const { user } = useGetUsersQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      user: data?.find((user) => user.id === userId),
+    }),
+  });
 
   if (!user) {
     return null;
