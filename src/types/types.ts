@@ -5,6 +5,10 @@ export type Review = {
   rating: number;
 };
 
+export type NewReview = Omit<Review, 'id'>;
+export type ReviewData = NewReview & { name: string };
+export type ReviewDataWithId = Review & { name: string };
+
 export type Restaurant = {
   id: string;
   name: string;

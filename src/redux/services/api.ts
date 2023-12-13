@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../constants';
-import { Dish, Restaurant, Review, User } from '../../types/types';
+import { Dish, Restaurant, Review, ReviewData, User } from '../../types/types';
 
 export const api = createApi({
   reducerPath: 'api',
@@ -33,6 +33,39 @@ export const api = createApi({
         url: 'reviews',
         params: { restaurantId },
       }),
+      providesTags: (result, _, restaurantId) =>
+        (
+          result?.map(({ id }) => ({ type: 'Review', id } as const)) || []
+        ).concat(
+          { type: 'Review', id: restaurantId },
+          { type: 'Review', id: restaurantId }
+        ),
+    }),
+    createReviewByRestaurant: builder.mutation<
+      Review,
+      { restaurantId: string; newReview: ReviewData }
+    >({
+      query: ({ restaurantId, newReview }) => ({
+        url: `review/${restaurantId}`,
+        method: 'POST',
+        body: newReview,
+      }),
+      invalidatesTags: (result, _, { restaurantId }) => [
+        { type: 'Review', id: restaurantId },
+      ],
+    }),
+    editReviewByRestaurant: builder.mutation<
+      Review,
+      { reviewId: string; restaurantId: string; editedReview: ReviewData }
+    >({
+      query: ({ reviewId, editedReview }) => ({
+        url: `review/${reviewId}`,
+        method: 'PATCH',
+        body: editedReview,
+      }),
+      invalidatesTags: (result, _, { restaurantId }) => [
+        { type: 'Review', id: restaurantId },
+      ],
     }),
   }),
 });
@@ -43,4 +76,6 @@ export const {
   useGetDishesByRestaurantQuery,
   useGetReviewsByRestaurantQuery,
   useGetUsersQuery,
+  useCreateReviewByRestaurantMutation,
+  useEditReviewByRestaurantMutation,
 } = api;
