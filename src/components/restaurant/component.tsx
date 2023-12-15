@@ -1,31 +1,37 @@
 import classNames from 'classnames';
-import { Menu } from '../menu/component';
 import { ReviewForm } from '../review-form/component';
-import { Reviews } from '../reviews/component';
 import styles from './styles.module.css';
-import { useAppSelector } from '../../hooks/hooks';
-import { selectRestaurantById } from '../../redux/features/entities/restaurant/selectors';
+import { Restaurant as RestaurantEntity } from '../../types/types';
+import { MenuContainer } from '../menu/container';
+import { ReviewsContainer } from '../reviews/container';
 
 interface RestaurantProps {
-  restaurantId: string;
+  restaurant: RestaurantEntity;
 }
 
-export const Restaurant = ({ restaurantId }: RestaurantProps) => {
-  const restaurant = useAppSelector((store) =>
-    selectRestaurantById(store, restaurantId)
-  );
+export const Restaurant = ({ restaurant }: RestaurantProps) => {
   if (!restaurant) {
     return null;
   }
 
-  const { name, menu, reviews } = restaurant;
+  const { name, description, img, id } = restaurant;
 
   return (
     <div className={classNames(styles.root)}>
-      <h2 className={classNames(styles.title)}>{name}</h2>
-      <Menu dishIds={menu} />
-      <Reviews reviewIds={reviews} />
-      <ReviewForm key={restaurantId} />
+      <div className={classNames(styles.container)}>
+        <img
+          className={classNames(styles.image)}
+          src={img}
+          alt={`Ресторан «${name}»`}
+        />
+        <div className={classNames(styles.textContainer)}>
+          <h2 className={classNames(styles.title)}>{name}</h2>
+          <p className={classNames(styles.description)}>{description}</p>
+        </div>
+      </div>
+      <MenuContainer restaurantId={id} />
+      <ReviewsContainer restaurantId={id} />
+      <ReviewForm key={id} />
     </div>
   );
 };

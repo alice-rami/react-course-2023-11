@@ -1,4 +1,4 @@
-import { RootState } from '../../..';
+import { RootState } from '../..';
 
 export const selectReviewModule = (state: RootState) => state.reviews;
 export const selectReviewIds = (state: RootState) =>

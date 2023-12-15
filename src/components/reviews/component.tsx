@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { Review } from '../review/component';
 import styles from './styles.module.css';
+import { ReviewContainer } from '../review/container';
 
 interface ReviewsProps {
   reviewIds: string[];
@@ -13,8 +13,11 @@ export const Reviews = ({ reviewIds, className }: ReviewsProps) => {
       <h3 className={classNames(styles.title)}>Отзывы</h3>
       <ul className={classNames(styles.list)}>
         {reviewIds.map((reviewId) => (
-          <li>
-            <Review reviewId={reviewId} className={classNames(styles.review)} />
+          <li key={reviewId}>
+            <ReviewContainer
+              reviewId={reviewId}
+              className={classNames(styles.review)}
+            />
           </li>
         ))}
       </ul>

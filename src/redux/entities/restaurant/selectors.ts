@@ -1,5 +1,4 @@
-import { RootState } from '../../../../redux';
-import { createSelector } from '@reduxjs/toolkit/react';
+import { RootState } from '../../../redux';
 
 export const selectRestaurantModule = (state: RootState) => state.restaurants;
 
@@ -12,11 +11,5 @@ export const selectRestaurantsByIds = (state: RootState) =>
 export const selectRestaurantById = (state: RootState, id: string) =>
   selectRestaurantModule(state).entities[id];
 
-export const selectRestaurantIdsAndNames = createSelector(
-  [selectRestaurantIds, selectRestaurantsByIds],
-  (restaurantIds, restaurantsByIds) => {
-    return restaurantIds.map((restaurantId) => {
-      return [restaurantId, restaurantsByIds[restaurantId].name];
-    });
-  }
-);
+export const selectRestaurantLoadingStatus = (state: RootState) =>
+  selectRestaurantModule(state).status;
