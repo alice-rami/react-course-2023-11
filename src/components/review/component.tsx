@@ -5,28 +5,27 @@ import { Rating } from '../rating/component';
 import { Review as ReviewEntity } from '../../types/types';
 import { Button } from '../button/component';
 import { User } from '../user/component';
-import { useGetUsersQuery } from '../../redux/services/api';
-import { EditingData } from '../reviews/container';
+import { useState } from 'react';
+import { EditReviewFormContainer } from '../edit-review-form/container';
+import { EditingData } from './container';
 
 interface ReviewProps {
   review: ReviewEntity;
-  setEditingData: React.Dispatch<React.SetStateAction<EditingData>>;
+  userName: string;
+  restaurantId: string;
   className?: string;
 }
 
 export const Review = ({
   review,
-  setEditingData,
+  userName,
+  restaurantId,
   className,
 }: ReviewProps) => {
-  const { user } = useGetUsersQuery(undefined, {
-    selectFromResult: ({ data }) => ({
-      user: data?.find((user) => user.id === review.userId),
-    }),
+  const [editingData, setEditingData] = useState<EditingData>({
+    isEditing: false,
+    reviewData: null,
   });
-
-  const userName = user?.name || '';
-
   if (!review) {
     return null;
   }
@@ -42,16 +41,27 @@ export const Review = ({
         <p className={classNames(styles.quote)}>"{text}"</p>
         <User>{userName}</User>
       </blockquote>
-      <Button
-        onClick={() => {
-          setEditingData({isEditing: true, reviewData});
-        }}
-        type='secondary'
-        size='small'
-        className={styles.editButton}
-      >
-        Редактировать
-      </Button>
+
+      {!editingData.isEditing && (
+        <Button
+          onClick={() => {
+            setEditingData({ isEditing: true, reviewData });
+          }}
+          type='secondary'
+          size='small'
+          className={styles.editButton}
+        >
+          Редактировать
+        </Button>
+      )}
+
+      {editingData.isEditing && editingData.reviewData && (
+        <EditReviewFormContainer
+          setEditingData={setEditingData}
+          reviewData={editingData.reviewData}
+          restaurantId={restaurantId}
+        />
+      )}
     </div>
   );
 };

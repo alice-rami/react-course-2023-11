@@ -1,7 +1,7 @@
 import { ReviewForm } from '../review-form/component';
 import { useEditReviewByRestaurantMutation } from '../../redux/services/api';
 import { ReviewDataWithId } from '../../types/types';
-import { EditingData } from '../reviews/container';
+import { EditingData } from '../review/container';
 
 interface EditReviewFormContainerProps {
   setEditingData: React.Dispatch<React.SetStateAction<EditingData>>;
