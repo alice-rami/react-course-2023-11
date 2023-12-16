@@ -25,5 +25,11 @@
 .editButton {
   text-decoration: underline;
   background-color: transparent;
+  border: none;
   color: var(--border-grey);
+}
+
+.editButton:hover {
+  color: var(--orange);
+  border: none;
 }
