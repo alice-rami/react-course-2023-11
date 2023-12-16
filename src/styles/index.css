@@ -20,6 +20,7 @@
   --quote-grey: #eee;
   --dark-blue: rgb(3, 65, 104);
   --light-blue: rgb(3, 65, 104, 0.5);
+  --black-overlay: rgba(0, 0, 0, 0.8);
 }
 
 * {

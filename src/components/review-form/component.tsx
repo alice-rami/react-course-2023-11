@@ -17,6 +17,7 @@ interface ReviewFormProps {
   formTitle: string;
   defaultValue: ReviewData;
   onSubmit: (reviewData: ReviewData) => void;
+  className?: string;
 }
 
 export const ReviewForm = ({
@@ -24,10 +25,11 @@ export const ReviewForm = ({
   buttonTitle,
   formTitle,
   defaultValue,
+  className,
 }: ReviewFormProps) => {
   const [formValue, dispatch] = useReducer(reducer, defaultValue);
   return (
-    <div className={classNames(styles.root)}>
+    <div className={classNames(styles.root, className)}>
       <h3 className={classNames(styles.title)}>{formTitle}</h3>
       <div className={classNames(styles.container)}>
         <div className={classNames(styles.inputContainer)}>
