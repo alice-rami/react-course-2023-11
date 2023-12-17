@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 import classNames from 'classnames';
 import { RestaurantPickerItemContainer } from '../restaurant-picker-item/container';
 import { Restaurant } from '../../types/types';
+import { NavLink } from 'react-router-dom';
 
 interface RestaurantPickerProps {
   pickRestaurant: Dispatch<SetStateAction<string>>;
@@ -17,11 +18,12 @@ export const RestaurantPicker = ({
     <nav className={classNames(styles.root)}>
       {restaurants.map((restaurant) => {
         return (
-          <RestaurantPickerItemContainer
-            key={restaurant.id}
-            restaurant={restaurant}
-            pickItem={() => pickRestaurant(restaurant.id)}
-          />
+          <NavLink key={restaurant.id} to={`/restaurants/${restaurant.id}`}>
+            <RestaurantPickerItemContainer
+              restaurant={restaurant}
+              pickItem={() => pickRestaurant(restaurant.id)}
+            />
+          </NavLink>
         );
       })}
     </nav>

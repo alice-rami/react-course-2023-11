@@ -1,14 +1,10 @@
 import { Restaurant } from './component';
 import { useGetRestaurantByIdQuery } from '../../redux/services/api';
+import { useParams } from 'react-router-dom';
 
-interface RestaurantContainerProps {
-  restaurantId: string;
-}
-
-export const RestaurantContainer = ({
-  restaurantId,
-}: RestaurantContainerProps) => {
-  const { data } = useGetRestaurantByIdQuery(restaurantId);
+export const RestaurantContainer = () => {
+  const { restaurantId } = useParams();
+  const { data } = useGetRestaurantByIdQuery(restaurantId || '');
 
   if (!data) {
     return null;

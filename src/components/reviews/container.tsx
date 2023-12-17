@@ -1,15 +1,14 @@
 import { Reviews } from './component';
 import { useGetReviewsByRestaurantQuery } from '../../redux/services/api';
+import { useParams } from 'react-router-dom';
 
-interface ReviewsContainerProps {
-  restaurantId: string;
-}
+export const ReviewsContainer = () => {
+  const { restaurantId } = useParams();
 
-export const ReviewsContainer = ({ restaurantId }: ReviewsContainerProps) => {
-  const { data } = useGetReviewsByRestaurantQuery(restaurantId);
+  const { data } = useGetReviewsByRestaurantQuery(restaurantId || '');
   if (!data) {
     return null;
   }
 
-  return <Reviews reviews={data} restaurantId={restaurantId} />;
+  return <Reviews reviews={data} restaurantId={restaurantId || ''} />;
 };
