@@ -4,3 +4,37 @@
   justify-content: space-between;
   width: 100%;
 }
+
+.navItem {
+  text-decoration: none;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: var(--orange-light);
+  padding: 10px 20px;
+  color: black;
+}
+
+.active {
+  background-color: var(--orange);
+}
+
+.activeDark {
+  background-color: var(--light-blue);
+  color: white;
+}
+
+.dark {
+  background-color: var(--dark-blue);
+  color: white;
+}
+
+.navItem:hover {
+  border: 1px solid var(--light-blue);
+  transition: border linear 0.5s;
+  cursor: pointer;
+}
+
+.navItem:active {
+  opacity: 0.8;
+}

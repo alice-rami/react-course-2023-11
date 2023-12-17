@@ -19,7 +19,7 @@ export const App = () => {
             <Route index element={<Navigate to='restaurants' replace />} />
             <Route path='restaurants' element={<RestaurantsPageContainer />}>
               <Route path=':restaurantId' element={<RestaurantContainer />}>
-                <Route index element={<MenuContainer />} />
+                <Route index element={<Navigate to='menu' replace />} />
                 <Route path='menu' element={<MenuContainer />} />
                 <Route path='reviews' element={<ReviewsContainer />} />
               </Route>
