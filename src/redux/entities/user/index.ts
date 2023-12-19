@@ -1,28 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { getUsers } from './get-users/get-users';
 import { User } from '../../../types/types';
-import {
-  REQUEST_STATUSES,
-  Statuses,
-} from '../../../constants/request-statuses';
+import { REQUEST_STATUSES } from '../../../constants/request-statuses';
 
-type UserEntity = Record<string, User>;
-
-interface UserInitialState {
-  entities: UserEntity;
-  ids: string[];
-  status: Statuses;
-}
-
-const initialState: UserInitialState = {
-  entities: {},
-  ids: [],
-  status: REQUEST_STATUSES.idle,
-};
+const entityAdapter = createEntityAdapter<User>();
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: entityAdapter.getInitialState({
+    status: REQUEST_STATUSES.idle,
+  }),
   reducers: {},
   extraReducers: (builder) =>
     builder
@@ -33,11 +20,7 @@ export const userSlice = createSlice({
         state.status = REQUEST_STATUSES.rejected;
       })
       .addCase(getUsers.fulfilled, (state, { payload }) => {
-        state.entities = payload.reduce((acc: UserEntity, user: User) => {
-          acc[user.id] = user;
-          return acc;
-        }, {});
-        state.ids = Array.from(new Set(payload.map(({ id }: User) => id)));
+        entityAdapter.setAll(state, payload);
         state.status = REQUEST_STATUSES.fulfilled;
       }),
 });

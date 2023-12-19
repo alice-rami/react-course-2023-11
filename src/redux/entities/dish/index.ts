@@ -1,28 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { getDishesByRestaurantId } from './get-dishes/get-dishes';
-import {
-  REQUEST_STATUSES,
-  Statuses,
-} from '../../../constants/request-statuses';
+import { REQUEST_STATUSES } from '../../../constants/request-statuses';
 import { Dish } from '../../../types/types';
 
-type DishEntity = Record<string, Dish>;
-
-interface DishInitialState {
-  entities: DishEntity;
-  ids: string[];
-  status: Statuses;
-}
-
-const initialState: DishInitialState = {
-  entities: {},
-  ids: [],
-  status: REQUEST_STATUSES.idle,
-};
+const entityAdapter = createEntityAdapter<Dish>();
 
 export const dishSlice = createSlice({
   name: 'dish',
-  initialState,
+  initialState: entityAdapter.getInitialState({
+    status: REQUEST_STATUSES.idle,
+  }),
   reducers: {},
   extraReducers: (builder) =>
     builder
@@ -33,14 +20,7 @@ export const dishSlice = createSlice({
         state.status = REQUEST_STATUSES.rejected;
       })
       .addCase(getDishesByRestaurantId.fulfilled, (state, { payload }) => {
-        state.entities = payload.reduce((acc: DishEntity, dish: Dish) => {
-          acc[dish.id] = dish;
-          return acc;
-        }, state.entities);
-
-        state.ids = Array.from(
-          new Set([...state.ids, ...payload.map(({ id }: Dish) => id)])
-        );
+        entityAdapter.upsertMany(state, payload);
 
         state.status = REQUEST_STATUSES.fulfilled;
       }),

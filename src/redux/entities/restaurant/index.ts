@@ -1,28 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { getRestaurants } from './thunks/get-restaurants';
 import { Restaurant } from '../../../types/types';
 import {
   REQUEST_STATUSES,
-  Statuses,
 } from '../../../constants/request-statuses';
 
-type RestaurantEntity = Record<string, Restaurant>;
-
-interface RestaurantsInitialState {
-  entities: RestaurantEntity;
-  ids: string[];
-  status: Statuses;
-}
-
-const initialState: RestaurantsInitialState = {
-  entities: {},
-  ids: [],
-  status: REQUEST_STATUSES.idle,
-};
+const entityAdapter = createEntityAdapter<Restaurant>();
 
 export const restaurantSlice = createSlice({
   name: 'restaurant',
-  initialState,
+  initialState: entityAdapter.getInitialState({status: REQUEST_STATUSES.idle}),
   reducers: {},
   extraReducers: (builder) =>
     builder
@@ -33,16 +20,7 @@ export const restaurantSlice = createSlice({
         state.status = REQUEST_STATUSES.rejected;
       })
       .addCase(getRestaurants.fulfilled, (state, { payload }) => {
-        state.entities = payload.reduce(
-          (acc: RestaurantEntity, restaurant: Restaurant) => {
-            acc[restaurant.id] = restaurant;
-            return acc;
-          },
-          {}
-        );
-        state.ids = Array.from(
-          new Set(payload.map(({ id }: Restaurant) => id))
-        );
+        entityAdapter.setAll(state, payload);
         state.status = REQUEST_STATUSES.fulfilled;
       }),
 });

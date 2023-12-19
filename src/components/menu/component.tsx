@@ -1,16 +1,17 @@
 import classNames from 'classnames';
 import styles from './styles.module.css';
-import { DishContainer } from '../dish/container';
 import { SyncLoader } from 'react-spinners';
 import { loaderCSSProps } from '../../constants/loader-css-props';
+import { Dish as DishEntity } from '../../types/types';
+import { Dish } from '../dish/component';
 
 interface MenuProps {
-  dishIds: string[];
+  dishes: DishEntity[];
   isLoading?: boolean;
   className?: string;
 }
 
-export const Menu = ({ dishIds, isLoading = false, className }: MenuProps) => {
+export const Menu = ({ dishes, isLoading = false, className }: MenuProps) => {
   return (
     <div className={classNames(styles.root, className)}>
       <h3 className={classNames(styles.title)}>Меню</h3>
@@ -23,9 +24,9 @@ export const Menu = ({ dishIds, isLoading = false, className }: MenuProps) => {
       />
       {!isLoading && (
         <ul className={classNames(styles.list)}>
-          {dishIds.map((dishId) => (
-            <li key={dishId} className={classNames(styles.itemContainer)}>
-              <DishContainer dishId={dishId} />
+          {dishes.map((dish) => (
+            <li key={dish.id} className={classNames(styles.itemContainer)}>
+              <Dish dish={dish} />
             </li>
           ))}
         </ul>

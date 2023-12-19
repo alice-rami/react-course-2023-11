@@ -3,58 +3,34 @@ import { Counter } from '../counter/component';
 import classNames from 'classnames';
 import styles from './styles.module.css';
 import { Button } from '../button/component';
-
-const SET_NAME = 'setName';
-const SET_TEXT = 'setText';
-const SET_RATING = 'setRating';
-
-const DEFAULT_FORM_VALUES = {
-  name: '',
-  text: '',
-  rating: 5,
-};
-
-const COUNTER_STEP = 0.5;
+import { ReviewData } from '../../types/types';
+import { reducer } from './reducer';
+import {
+  DECREMENT_RATING,
+  INCREMENT_RATING,
+  SET_NAME,
+  SET_TEXT,
+} from '../../constants/review-form';
 
 interface ReviewFormProps {
+  buttonTitle: string;
+  formTitle: string;
+  defaultValue: ReviewData;
+  onSubmit: (reviewData: ReviewData) => void;
   className?: string;
 }
 
-type ReviewFormAction =
-  | { type: typeof SET_NAME; payload: string }
-  | { type: typeof SET_TEXT; payload: string }
-  | { type: typeof SET_RATING; payload: number };
-
-const reducer = (
-  state: typeof DEFAULT_FORM_VALUES,
-  action: ReviewFormAction
-) => {
-  switch (action.type) {
-    case SET_NAME:
-      return {
-        ...state,
-        name: action.payload,
-      };
-    case SET_TEXT:
-      return {
-        ...state,
-        text: action.payload,
-      };
-    case SET_RATING:
-      return {
-        ...state,
-        rating: action.payload,
-      };
-    default:
-      return state;
-  }
-};
-
-export const ReviewForm = ({ className }: ReviewFormProps) => {
-  const [formValue, dispatch] = useReducer(reducer, DEFAULT_FORM_VALUES);
+export const ReviewForm = ({
+  onSubmit,
+  buttonTitle,
+  formTitle,
+  defaultValue,
+  className,
+}: ReviewFormProps) => {
+  const [formValue, dispatch] = useReducer(reducer, defaultValue);
   return (
     <div className={classNames(styles.root, className)}>
-      <h3 className={classNames(styles.title)}>Оставить отзыв</h3>
+      <h3 className={classNames(styles.title)}>{formTitle}</h3>
       <div className={classNames(styles.container)}>
         <div className={classNames(styles.inputContainer)}>
           <label htmlFor='name' className={classNames(styles.inputLabel)}>
@@ -87,27 +63,16 @@ export const ReviewForm = ({ className }: ReviewFormProps) => {
           <span className={classNames(styles.inputLabel)}>Рейтинг </span>
           <Counter
             value={formValue.rating}
-            increment={() =>
-              dispatch({
-                type: SET_RATING,
-                payload: formValue.rating + COUNTER_STEP,
-              })
-            }
-            decrement={() =>
-              dispatch({
-                type: SET_RATING,
-                payload: formValue.rating - COUNTER_STEP,
-              })
-            }
+            increment={() => dispatch({ type: INCREMENT_RATING })}
+            decrement={() => dispatch({ type: DECREMENT_RATING })}
           />
         </div>
         <Button
-          onClick={() => console.log('submit')}
-          disabled
+          onClick={() => onSubmit(formValue)}
           size={'big'}
           className={classNames(styles.submitButton)}
         >
-          Отправить
+          {buttonTitle}
         </Button>
       </div>
     </div>

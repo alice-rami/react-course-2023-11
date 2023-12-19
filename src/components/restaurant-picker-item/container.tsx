@@ -1,17 +1,14 @@
-import { useAppSelector } from '../../hooks/hooks';
-import { selectRestaurantById } from '../../redux/entities/restaurant/selectors';
+import { Restaurant } from '../../types/types';
 import { PickerItem } from '../picker-item/component';
 
 interface RestaurantPickerItemContainerProps {
-  restaurantId: string;
+  restaurant: Restaurant;
   pickItem: () => void;
 }
 export const RestaurantPickerItemContainer = ({
-  restaurantId,
+  restaurant,
   pickItem,
 }: RestaurantPickerItemContainerProps) => {
-  const restaurant = useAppSelector((state) =>
-    selectRestaurantById(state, restaurantId)
-  );
-  return <PickerItem pickItem={pickItem} value={restaurant.name} />;
+  const { name } = restaurant;
+  return <PickerItem pickItem={pickItem} value={name} />;
 };
