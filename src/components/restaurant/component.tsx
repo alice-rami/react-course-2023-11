@@ -1,8 +1,7 @@
 import classNames from 'classnames';
 import styles from './styles.module.css';
 import { Restaurant as RestaurantEntity } from '../../types/types';
-import { MenuContainer } from '../menu/container';
-import { ReviewsContainer } from '../reviews/container';
+import { NavLink, Outlet } from 'react-router-dom';
 
 interface RestaurantProps {
   restaurant: RestaurantEntity;
@@ -28,8 +27,33 @@ export const Restaurant = ({ restaurant }: RestaurantProps) => {
           <p className={classNames(styles.description)}>{description}</p>
         </div>
       </div>
-      <MenuContainer restaurantId={id} />
-      <ReviewsContainer restaurantId={id} />
+      <nav className={classNames(styles.nav)}>
+        <span className={styles.navItemContainer}>
+          <NavLink
+            to={`/restaurants/${id}/menu`}
+            className={({ isActive }) =>
+              classNames(styles.navItem, {
+                [styles.active]: isActive,
+              })
+            }
+          >
+            Меню
+          </NavLink>
+        </span>
+        <span className={styles.navItemContainer}>
+          <NavLink
+            to={`/restaurants/${id}/reviews`}
+            className={({ isActive }) =>
+              classNames(styles.navItem, {
+                [styles.active]: isActive,
+              })
+            }
+          >
+            Отзывы
+          </NavLink>
+        </span>
+      </nav>
+      <Outlet />
     </div>
   );
 };

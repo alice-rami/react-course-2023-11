@@ -1,15 +1,29 @@
 import { Reviews } from './component';
 import { useGetReviewsByRestaurantQuery } from '../../redux/services/api';
+import { useParams } from 'react-router-dom';
+import { loaderCSSProps } from '../../constants/loader-css-props';
+import { SyncLoader } from 'react-spinners';
 
-interface ReviewsContainerProps {
-  restaurantId: string;
-}
+export const ReviewsContainer = () => {
+  const { restaurantId } = useParams();
+  const { data, isFetching } = useGetReviewsByRestaurantQuery(
+    restaurantId || ''
+  );
 
-export const ReviewsContainer = ({ restaurantId }: ReviewsContainerProps) => {
-  const { data } = useGetReviewsByRestaurantQuery(restaurantId);
+  if (isFetching) {
+    return (
+      <SyncLoader
+        color='#ff8c00'
+        size={10}
+        speedMultiplier={1}
+        loading={isFetching}
+        cssOverride={loaderCSSProps}
+      />
+    );
+  }
   if (!data) {
     return null;
   }
 
-  return <Reviews reviews={data} restaurantId={restaurantId} />;
+  return <Reviews reviews={data} restaurantId={restaurantId || ''} />;
 };

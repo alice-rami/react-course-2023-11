@@ -1,27 +1,32 @@
-import { Dispatch, SetStateAction } from 'react';
 import styles from './styles.module.css';
 import classNames from 'classnames';
-import { RestaurantPickerItemContainer } from '../restaurant-picker-item/container';
 import { Restaurant } from '../../types/types';
+import { NavLink } from 'react-router-dom';
+import { useTheme } from '../../theme-context/hook';
 
 interface RestaurantPickerProps {
-  pickRestaurant: Dispatch<SetStateAction<string>>;
   restaurants: Restaurant[];
 }
 
-export const RestaurantPicker = ({
-  pickRestaurant,
-  restaurants,
-}: RestaurantPickerProps) => {
+export const RestaurantPicker = ({ restaurants }: RestaurantPickerProps) => {
+  const { theme } = useTheme();
   return (
     <nav className={classNames(styles.root)}>
       {restaurants.map((restaurant) => {
         return (
-          <RestaurantPickerItemContainer
+          <NavLink
             key={restaurant.id}
-            restaurant={restaurant}
-            pickItem={() => pickRestaurant(restaurant.id)}
-          />
+            to={`/restaurants/${restaurant.id}`}
+            className={({ isActive }) =>
+              classNames(styles.navItem, {
+                [styles.active]: isActive && theme !== 'dark',
+                [styles.activeDark]: isActive && theme === 'dark',
+                [styles.dark]: !isActive && theme === 'dark',
+              })
+            }
+          >
+            {restaurant.name}
+          </NavLink>
         );
       })}
     </nav>
